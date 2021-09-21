@@ -18,7 +18,7 @@ export default function AddTodoInput({ dispatch }) {
     <div className="add-items d-flex">
       <input
         value={todoTitle}
-        onKeyDown={(e) => {
+        onKeyUp={(e) => {
           if (e.keyCode === 13) {
             handleAddTodo();
           }
