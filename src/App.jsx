@@ -1,43 +1,45 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useContext } from "react";
 import AddTodoInput from "./components/AddTodoInput";
 import Todo from "./components/Todo";
+import GetFinishedTask from "./components/GetFinishedTask";
+
 //Design-System Sources and Components
 import { Menu } from "antd";
 import { FolderOutlined } from "@ant-design/icons";
-import GetFinishedTask from "./components/GetFinishedTask";
+import { TodoContext } from "./context/TodoContext";
 const { SubMenu } = Menu;
 
-const initialTodo = JSON.parse(localStorage.getItem("todo-data")) || [];
-function reducer(state, action) {
-  switch (action.type) {
-    case "add":
-      return [...state, action.payload];
-    case "remove":
-      return state.filter((s) => s.id !== action.payload);
-    case "changed":
-      return state.map((todo) => {
-        return todo.id === action.payload
-          ? { ...todo, isDone: !todo.isDone }
-          : todo;
-      });
-    case "todoStarted":
-      return state.map((todo) => {
-        return todo.id === action.payload
-          ? { ...todo, isStart: !todo.isStart }
-          : todo;
-      });
-    default:
-      return state;
-  }
-}
+// const initialTodo = JSON.parse(localStorage.getItem("todo-data")) || [];
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case "add":
+//       return [...state, action.payload];
+//     case "remove":
+//       return state.filter((s) => s.id !== action.payload);
+//     case "changed":
+//       return state.map((todo) => {
+//         return todo.id === action.payload
+//           ? { ...todo, isDone: !todo.isDone }
+//           : todo;
+//       });
+//     case "todoStarted":
+//       return state.map((todo) => {
+//         return todo.id === action.payload
+//           ? { ...todo, isStart: !todo.isStart }
+//           : todo;
+//       });
+//     default:
+//       return state;
+//   }
+// }
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialTodo);
+  // const [state, dispatch] = useReducer(reducer, initialTodo);
 
-  useEffect(() => {
-    localStorage.setItem("todo-data", JSON.stringify(state));
-  }, [state]);
-
+  // useEffect(() => {
+  //   localStorage.setItem("todo-data", JSON.stringify(state));
+  // }, [state]);
+  const { state, dispatch } = useContext(TodoContext);
   return (
     <>
       <Menu
@@ -68,11 +70,11 @@ function App() {
               <div className="card px-3">
                 <div className="card-body">
                   <h4 className="card-title">Awesome Todo list</h4>
-                  <AddTodoInput dispatch={dispatch} />
+                  <AddTodoInput />
                   <div className="list-wrapper">
                     <ul className="d-flex flex-column-reverse todo-list">
                       {state.map((todo) => (
-                        <Todo key={todo.id} dispatch={dispatch} data={todo} />
+                        <Todo key={todo.id} data={todo} />
                       ))}
                     </ul>
                   </div>

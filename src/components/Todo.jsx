@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 //Design-System Sources and Components
 import { Steps, Button, Row, Col } from "antd";
@@ -10,10 +10,12 @@ import {
   CheckOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
+import { TodoContext } from "../context/TodoContext";
 
 const { Step } = Steps;
 
-export default function Todo({ data, dispatch }) {
+export default function Todo({ data }) {
+  const { dispatch } = useContext(TodoContext);
   return (
     <div style={{ paddingTop: "23px" }}>
       <Steps style={{ fontFamily: "MmdReg" }}>

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { v4 as uuid } from "uuid";
 import PropTypes from "prop-types";
+import { TodoContext } from "../context/TodoContext";
 
-export default function AddTodoInput({ dispatch }) {
+export default function AddTodoInput() {
   const [todoTitle, setTodoTitle] = useState("");
-
+  const { dispatch } = useContext(TodoContext);
   function handleAddTodo() {
     if (!todoTitle) return;
     dispatch({
